@@ -1,8 +1,9 @@
 package com.nevesoft.barberScheduling.service;
 
-import com.nevesoft.barberScheduling.exception.BarberSchedulingRespose;
+import com.nevesoft.barberScheduling.exception.SchedulingRespose;
 import com.nevesoft.barberScheduling.model.Barber;
 import com.nevesoft.barberScheduling.repository.BarberRepository;
+import com.nevesoft.barberScheduling.service.barber.BarberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BarberServiceImpl implements BarberService{
+public class BarberServiceImpl implements BarberService {
 
     @Autowired
     private BarberRepository barberRepository;
