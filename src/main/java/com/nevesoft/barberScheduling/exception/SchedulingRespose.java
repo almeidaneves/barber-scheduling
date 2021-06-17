@@ -9,12 +9,12 @@ import java.util.Date;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BarberSchedulingRespose {
+public class SchedulingRespose {
     private int status;
     private String message;
     private LocalDateTime timestamp;
 
-    public BarberSchedulingRespose(String message, int status) {
+    public SchedulingRespose(String message, int status) {
         //super(message);
         this.message=message;
         this.status = status;

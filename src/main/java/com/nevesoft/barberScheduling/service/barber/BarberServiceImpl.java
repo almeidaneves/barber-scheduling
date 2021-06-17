@@ -41,6 +41,6 @@ public class BarberServiceImpl implements BarberService{
 
     @Override
     public Barber getBarberByPhone(Barber request) {
-        return barberRepository.findByPhone(request.getPhone);
+        return null;
     }
 }

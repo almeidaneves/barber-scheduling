@@ -1,4 +1,4 @@
-package com.nevesoft.barberScheduling.service;
+package com.nevesoft.barberScheduling.service.barber;
 
 import com.nevesoft.barberScheduling.model.Barber;
 import org.springframework.http.ResponseEntity;

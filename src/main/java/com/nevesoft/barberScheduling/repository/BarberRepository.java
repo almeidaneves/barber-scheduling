@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface BarberRepository extends JpaRepository<Barber, Integer> {
+
     public Optional <Barber> findByEmail(String email);
     public Optional <Barber> findByPhone(String phone);
 }

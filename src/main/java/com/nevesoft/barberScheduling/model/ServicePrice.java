@@ -23,10 +23,6 @@ public class ServicePrice {
     private String name;
     @Column
     @NotBlank
-    @Size(max = 12)
-    private String phone;
-    @Column
-    @NotBlank
     private LocalTime duration;
     @Column
     @NotBlank

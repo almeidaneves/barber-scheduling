@@ -1,9 +1,9 @@
 package com.nevesoft.barberScheduling.controller;
 
-import com.nevesoft.barberScheduling.exception.BarberSchedulingRespose;
+import com.nevesoft.barberScheduling.exception.SchedulingRespose;
 import com.nevesoft.barberScheduling.model.Barber;
 import com.nevesoft.barberScheduling.repository.BarberRepository;
-import com.nevesoft.barberScheduling.service.BarberService;
+import com.nevesoft.barberScheduling.service.barber.BarberService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class BarberController {
     private BarberService barberService;
     @Autowired
     private BarberRepository barberRepository;
-    public static final Logger logger = (Logger) LoggerFactory.getLogger(BarberController.class);
+    //public static final Logger logger = (Logger) LoggerFactory.getLogger(BarberController.class);
 
     @GetMapping("barbers")
     public ResponseEntity<List<Barber>> getAllBarbers(){
@@ -43,10 +43,10 @@ public class BarberController {
 
         if(existBarber.isPresent()) {
 
-            return  new ResponseEntity<>(new BarberSchedulingRespose("Invalid data! Email already exist",409 ),HttpStatus.CONFLICT);
+            return  new ResponseEntity<>(new SchedulingRespose("Invalid data! Email already exist",409 ),HttpStatus.CONFLICT);
         }
         else if(existBarberbyPhone.isPresent()){
-            return  new ResponseEntity<>(new BarberSchedulingRespose("Invalid data! Phone already exist",409 ),HttpStatus.CONFLICT);
+            return  new ResponseEntity<>(new SchedulingRespose("Invalid data! Phone already exist",409 ),HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(barberService.addBarber(request), HttpStatus.CREATED);
     }
@@ -55,7 +55,7 @@ public class BarberController {
         Barber barber = barberService.findBarber(id);
 
         if(barber == null)
-            return new ResponseEntity<>(new BarberSchedulingRespose("Barber with id "+id+" not found", 404), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new SchedulingRespose("Barber with id "+id+" not found", 404), HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(barber, HttpStatus.OK);
 
     }
@@ -63,9 +63,11 @@ public class BarberController {
     @PutMapping("barbers/update")
     public ResponseEntity<?> updateBarber(@RequestBody Barber request){
         //Barber barber = barberService.findBarber(request.getId());
-
-        if(!barberRepository.existsById(request.getId())){
-            return  new ResponseEntity<>(new BarberSchedulingRespose("Barber with this id not found", 404), HttpStatus.NOT_FOUND);
+        if (request.getId()==null){
+            return  new ResponseEntity<>(new SchedulingRespose("Id must not be null ", 404), HttpStatus.NOT_FOUND);
+        }
+        else if(!barberRepository.existsById(request.getId())){
+            return  new ResponseEntity<>(new SchedulingRespose("Barber with this id not found", 404), HttpStatus.NOT_FOUND);
         }
         request = barberService.updateBarber(request);
 
@@ -75,7 +77,7 @@ public class BarberController {
     public ResponseEntity<?> deleteBarber(@PathVariable("id") Integer id){
 
         if(!barberRepository.existsById(id))
-            return  new ResponseEntity<>(new BarberSchedulingRespose("Barber with this id not found",404), HttpStatus.NOT_FOUND);
+            return  new ResponseEntity<>(new SchedulingRespose("Barber with this id not found",404), HttpStatus.NOT_FOUND);
         barberRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
