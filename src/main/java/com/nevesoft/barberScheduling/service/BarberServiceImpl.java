@@ -4,6 +4,8 @@ import com.nevesoft.barberScheduling.exception.SchedulingRespose;
 import com.nevesoft.barberScheduling.model.Barber;
 import com.nevesoft.barberScheduling.repository.BarberRepository;
 import com.nevesoft.barberScheduling.service.barber.BarberService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

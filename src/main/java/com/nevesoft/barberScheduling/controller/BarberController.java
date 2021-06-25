@@ -4,6 +4,7 @@ import com.nevesoft.barberScheduling.exception.SchedulingRespose;
 import com.nevesoft.barberScheduling.model.Barber;
 import com.nevesoft.barberScheduling.repository.BarberRepository;
 import com.nevesoft.barberScheduling.service.barber.BarberService;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,25 +15,27 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/api/")
 public class BarberController {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger("BarberController.class");
     @Autowired
     private BarberService barberService;
     @Autowired
     private BarberRepository barberRepository;
-    //public static final Logger logger = (Logger) LoggerFactory.getLogger(BarberController.class);
 
     @GetMapping("barbers")
     public ResponseEntity<List<Barber>> getAllBarbers(){
+
         List<Barber> barberList = barberService.findAllBarbers();
 
         if(barberList.isEmpty()){
+            LOGGER.trace("BarberList is empty...");
             return new ResponseEntity<>(barberList, HttpStatus.NOT_FOUND);
         }
-
+        LOGGER.info("List of Barber..");
         return new ResponseEntity<>(barberList, HttpStatus.OK);
     }
     @PostMapping("barbers/add")
@@ -80,6 +83,6 @@ public class BarberController {
             return  new ResponseEntity<>(new SchedulingRespose("Barber with this id not found",404), HttpStatus.NOT_FOUND);
         barberRepository.deleteById(id);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(new SchedulingRespose("Barber with this id: "+id+" was deleted with success..",200),HttpStatus.NO_CONTENT);
     }
 }
